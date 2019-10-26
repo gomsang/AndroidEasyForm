@@ -2,6 +2,7 @@
 <layout>
 
     <data>
+
         <variable
             name="form"
             type="com.gomsang.androideasyform.BasicRegistForm" />
@@ -30,6 +31,15 @@
             android:layout_marginTop="16dp"
             android:hint="Description"
             android:text="@={form.desc}" />
+
+        <EditText
+            android:id="@+id/ageEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Age"
+            android:inputType="number"
+            android:text="@={form.age}" />
 
         <Button
             android:id="@+id/submitButton"

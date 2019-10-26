@@ -17,4 +17,9 @@ class BasicRegistForm : EasyForm() {
         }
     }
     val descError = name.errorMessage
+
+    val age = registField(EasyField<String>()).apply {
+        attach(BasicTextValidator.EmptyValidator(), "Please input your age.")
+        attach({ get()?.toInt()!! > 18 }, "We are not allow age under 18")
+    }
 }
