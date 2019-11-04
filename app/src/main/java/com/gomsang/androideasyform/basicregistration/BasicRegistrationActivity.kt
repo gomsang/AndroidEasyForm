@@ -10,9 +10,12 @@ class BasicRegistrationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil.setContentView<ActivityBasicRegistrationBinding>(this,
+        val binding = DataBindingUtil.setContentView<ActivityBasicRegistrationBinding>(
+            this,
             R.layout.activity_basic_registration
         )
-        binding.form = RegistrationForm()
+
+        val form = RegistrationForm()
+        binding.form = form
     }
 }

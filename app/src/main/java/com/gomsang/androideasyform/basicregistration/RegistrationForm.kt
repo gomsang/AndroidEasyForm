@@ -6,23 +6,21 @@ import com.gomsang.androideasyform.library.EasyForm
 
 class RegistrationForm : EasyForm() {
     val name = registField(EasyField<String>().apply {
-        validate(BasicTextValidator.EmptyValidator(), "")
+        validate(BasicTextValidator.EmptyValidator(), "Input your name, please.")
     })
 
     val introduction = registField(EasyField<String>().apply {
-        validate(BasicTextValidator.EmptyValidator(), "")
-
+        validate(BasicTextValidator.EmptyValidator(), "Input your introduction, please.")
     })
 
     val password = registField(EasyField<String>().apply {
-        validate(BasicTextValidator.EmptyValidator(), "")
+        validate(BasicTextValidator.EmptyValidator(), "Input your password, please.")
     })
 
     val passwordRepeat = registField(EasyField<String>().apply {
-        validate(BasicTextValidator.EmptyValidator(), "")
+        validate(BasicTextValidator.EmptyValidator(), "It is not the same as the password you entered.")
         validate({
             password.get() == it
         }, "")
     })
-
 }
