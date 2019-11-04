@@ -29,15 +29,15 @@ class EasyField<T> : ObservableField<T>() {
         }
     }
 
-    fun attach(validator: EasyValidator<T>, msg: String) {
+    fun validate(validator: EasyValidator<T>, msg: String) {
         validators.add(validator)
         validatorMessageMap[validator] = msg
     }
 
-    fun attach(function: () -> Boolean, msg: String) {
+    fun validate(function: (T) -> Boolean, msg: String) {
         val validator = object : EasyValidator<T> {
             override fun isValid(value: T): Boolean {
-                return function()
+                return function(value)
             }
         }
 

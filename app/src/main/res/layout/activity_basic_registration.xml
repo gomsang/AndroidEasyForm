@@ -5,7 +5,7 @@
 
         <variable
             name="form"
-            type="com.gomsang.androideasyform.BasicRegistForm" />
+            type="com.gomsang.androideasyform.basicregistration.RegistrationForm" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp"
-        tools:context=".MainActivity">
+        tools:context=".basicregistration.BasicRegistrationActivity">
 
         <EditText
             android:id="@+id/nameEditText"
@@ -25,29 +25,36 @@
             android:text="@={form.name}" />
 
         <EditText
-            android:id="@+id/descEditText"
+            android:id="@+id/introductionEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="Description"
-            android:text="@={form.desc}" />
+            android:hint="Introduction"
+            android:text="@={form.introduction}" />
+
 
         <EditText
-            android:id="@+id/ageEditText"
+            android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="Age"
-            android:inputType="number"
-            android:text="@={form.age}" />
+            android:hint="Password"
+            android:text="@={form.password}" />
+
+        <EditText
+            android:id="@+id/passwordRepeatEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Repeat Password"
+            android:text="@={form.passwordRepeat}" />
 
         <Button
-            android:id="@+id/submitButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:enabled="@{form.isValidate()}"
-            android:text="Submit" />
+            android:text="REGIST" />
+
 
     </LinearLayout>
 </layout>
