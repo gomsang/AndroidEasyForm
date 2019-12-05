@@ -16,7 +16,7 @@ You will change your environment to under written if you weren't same with it.
 ## Advantages of this method
 
 - Easy constructed form-validating
-- Making highly readable management environment
+- Making highly readable form management environment
 - Easy to use with LiveData
 
 ## How to Use?
