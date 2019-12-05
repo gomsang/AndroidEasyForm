@@ -15,6 +15,7 @@ class RegistrationForm : EasyForm() {
 
     val password = registField(EasyField<String>().apply {
         validate(EasyLab.TextEmptyValidator(), "Input your password, please.")
+        validate(EasyLab.TextLengthValidator(4, 12), "")
     })
 
     val passwordRepeat = registField(EasyField<String>().apply {

@@ -15,9 +15,6 @@ class EasyField<T> : ObservableField<T>() {
     val errorMessage = ObservableField("")
     var essential: () -> Boolean = { true }
 
-    override fun get(): T? {
-        return super.get()
-    }
 
     override fun set(value: T?) {
         super.set(value)
