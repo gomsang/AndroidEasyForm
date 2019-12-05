@@ -1,12 +1,19 @@
 package com.gomsang.androideasyform.library
 
+import android.util.Log
 import androidx.databinding.ObservableField
 
+/**
+ * The form
+ */
 open class EasyForm {
     private val registeredFields = mutableListOf<EasyField<Any>>()
     private val fieldValidateMap: MutableMap<EasyField<Any>, Boolean> = mutableMapOf()
     var isValidate: ObservableField<Boolean> = ObservableField(false)
 
+    /**
+     * regist each field to form
+     */
     fun <T> registField(field: EasyField<T>): EasyField<T> {
         registeredFields.add(field as EasyField<Any>)
         fieldValidateMap[field] = false
@@ -14,8 +21,12 @@ open class EasyForm {
         return field
     }
 
+    /**
+     * update
+     */
     fun update(easyField: EasyField<Any>) {
         fieldValidateMap[easyField] = easyField.isValid()
+        Log.d("updateRequest", easyField.isValid().toString())
         stateUpdate()
     }
 

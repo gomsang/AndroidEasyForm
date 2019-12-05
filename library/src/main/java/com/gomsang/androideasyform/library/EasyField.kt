@@ -1,11 +1,13 @@
 package com.gomsang.androideasyform.library
 
-import android.util.Log
 import androidx.databinding.ObservableField
 
+/**
+ * Using for validate each field.
+ */
 class EasyField<T> : ObservableField<T>() {
     private var linkedForm: EasyForm? = null
-    private var onFieldChangeListener: OnFieldChangeListener<T>? = null
+    private var listenerList = mutableListOf<OnValueChangedListener<T>>()
 
     private val validators: MutableList<EasyValidator<T>> = mutableListOf()
     private val validatorMessageMap: MutableMap<EasyValidator<T>, String> = mutableMapOf()
@@ -20,8 +22,8 @@ class EasyField<T> : ObservableField<T>() {
     override fun set(value: T?) {
         super.set(value)
         if (value != null) {
-            onFieldChangeListener?.let {
-                it.onChanged(this, get())
+            listenerList.forEach {
+                it.onChanged(this, value)
             }
             linkedForm?.let {
                 it.update(this as EasyField<Any>)
@@ -45,19 +47,23 @@ class EasyField<T> : ObservableField<T>() {
         validatorMessageMap[validator] = msg
     }
 
-    fun setOnFieldChangeListener(listener: OnFieldChangeListener<T>) {
-        onFieldChangeListener = listener
-        if (get() != null) listener.onChanged(this, get())
+    fun addOnFieldChangeListener(listener: OnValueChangedListener<T>) {
+        if (!listenerList.contains(listener)) {
+            listenerList.add(listener)
+            if (get() != null) listener.onChanged(this, get())
+        }
     }
 
-    fun setOnFieldChangeListener(function: (EasyField<T>, T?) -> Unit) {
-        val listener = object : OnFieldChangeListener<T> {
+    fun addOnFieldChangeListener(function: (EasyField<T>, T?) -> Unit) {
+        val listener = object : OnValueChangedListener<T> {
             override fun onChanged(easyField: EasyField<T>, value: T?) {
                 function.invoke(easyField, value)
             }
         }
-        onFieldChangeListener = listener
-        if (get() != null) listener.onChanged(this, get())
+        if (!listenerList.contains(listener)) {
+            listenerList.add(listener)
+            if (get() != null) listener.onChanged(this, get())
+        }
     }
 
     fun attachForm(form: EasyForm) {
@@ -75,7 +81,7 @@ class EasyField<T> : ObservableField<T>() {
         return true
     }
 
-    interface OnFieldChangeListener<T> {
+    interface OnValueChangedListener<T> {
         fun onChanged(easyField: EasyField<T>, value: T?)
     }
 }
