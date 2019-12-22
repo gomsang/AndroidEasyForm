@@ -1,5 +1,7 @@
 package com.gomsang.androideasyform.library.validators
 
+import android.text.TextUtils
+import android.util.Patterns
 import com.gomsang.androideasyform.library.EasyField
 import com.gomsang.androideasyform.library.EasyForm
 import com.gomsang.androideasyform.library.EasyValidator
@@ -17,8 +19,14 @@ class EasyLab {
 
     class TextLengthValidator(private val min: Int, private val max: Int) : EasyValidator<String> {
         override fun isValid(value: String): Boolean {
-            if (value.length >= min && value.length <= max) return true
+            if (value.length in min..max) return true
             return false
+        }
+    }
+
+    class EmailValidator : EasyValidator<String> {
+        override fun isValid(value: String): Boolean {
+            return Patterns.EMAIL_ADDRESS.matcher(value).matches()
         }
     }
 

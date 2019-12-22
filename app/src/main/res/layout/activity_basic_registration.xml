@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <variable
             name="form"
             type="com.gomsang.androideasyform.basicregistration.RegistrationForm" />
@@ -45,6 +47,11 @@
             android:layout_marginTop="16dp"
             android:hint="Repeat Password"
             android:text="@={form.passwordRepeat}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{form.errorMessages[0]}" />
 
         <Button
             android:layout_width="match_parent"
