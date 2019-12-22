@@ -9,6 +9,7 @@ import androidx.databinding.ObservableField
 open class EasyForm {
     private val registeredFields = mutableListOf<EasyField<Any>>()
     private val fieldValidateMap: MutableMap<EasyField<Any>, Boolean> = mutableMapOf()
+    val errorMessage: ObservableField<String> = ObservableField()
     var isValidate: ObservableField<Boolean> = ObservableField(false)
 
     /**
@@ -26,11 +27,17 @@ open class EasyForm {
      */
     fun update(easyField: EasyField<Any>) {
         fieldValidateMap[easyField] = easyField.isValid()
-        Log.d("updateRequest", easyField.isValid().toString())
         stateUpdate()
+
+        val erMsgs = getErrorMessages()
+        if (erMsgs.isNotEmpty()) {
+            errorMessage.set(erMsgs[0])
+        } else {
+            errorMessage.set("")
+        }
     }
 
-    fun getErrorMessages(): List<String> {
+    private fun getErrorMessages(): List<String> {
         val messages = mutableListOf<String>()
         for (field in registeredFields) {
             if (!field.errorMessage.get().isNullOrEmpty()) {

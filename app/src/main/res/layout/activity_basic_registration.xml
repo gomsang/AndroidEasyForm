@@ -51,7 +51,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{form.errorMessages[0]}" />
+            android:text="@{form.errorMessage}" />
 
         <Button
             android:layout_width="match_parent"
