@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".basicregistrationwitherrorhandle.BasicRegistrationWithErrorHandle">
-
         </activity>
         <activity android:name=".basicregistration.BasicRegistrationActivity">
             <intent-filter>

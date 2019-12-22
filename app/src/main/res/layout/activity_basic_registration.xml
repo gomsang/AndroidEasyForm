@@ -23,6 +23,15 @@
             android:hint="Name"
             android:text="@={form.name}" />
 
+
+        <EditText
+            android:id="@+id/emailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Email"
+            android:text="@={form.email}" />
+
         <EditText
             android:id="@+id/introductionEditText"
             android:layout_width="match_parent"
