@@ -4,7 +4,8 @@ In many cases, form verification is required, such as membership screen, login s
 
 This project offers a way to make managing such form verification any bit easier.
 
-<video width="25%" height="25%" src="readmeassets/1.mp4"></video>
+<img src="README.assets/1.gif" alt="1" style="zoom:25%;" />
+
 ## Caution!
 
 It's just close to a personal suggestion. So, each version update can have major changes. 
@@ -197,7 +198,8 @@ If you want show your message to any textview dynamically, just set like this.
 
 ### Construct with Google Material TextInputLayout
 
-<video width="25%" height="25%" src="readmeassets/2.mp4"></video>
+<img src="README.assets/2.gif" alt="2" style="zoom:25%;" />
+
 Set error message variable like this. (All EasyField has error message variable like this.)
 
 ```kotlin
