@@ -2,7 +2,9 @@
 
 In many cases, form verification is required, such as membership screen, login screen, and post upload screen. Forms can require multiple to dozens of different forms, which further complicates the verification logic.
 
-This project offers a way to make managing such form verification any bit easier.
+EasyForm is designed to be DataBinding friendly.
+
+**This project offers a way to make managing such form verification any bit easier. And it's easy to customize to meet the needs of each developer.**
 
 <img src="README.assets/1.gif" alt="2" width="25%" height="25%" />
 
@@ -12,21 +14,13 @@ It's just close to a personal suggestion. So, each version update can have major
 
 Fix the library version as much as possible, and be sure to read the readme file when updating.
 
-Do not include complex or heavy logic in the each validator. The operating performance of the form has not been verified yet.
+**Do not include complex or heavy logic in the each validator. The operating performance of the form has not been verified yet.**
 
-### Support Environment
+**You will change your environment to under written if you weren't same with it.**
 
-You will change your environment to under written if you weren't same with it.
-
-- Android X migrated project
-- Kotlin based project
-- DataBinding used project
-
-## Advantages of this method
-
-- Easy constructed form-validating
-- Making highly readable form management environment
-- Easy to use with LiveData
+- **Android X migrated** project
+- **Kotlin based** project
+- **DataBinding used** project
 
 ## Importing Library
 
@@ -51,7 +45,9 @@ dependencies {
 }
 ```
 
-## How to apply form
+
+
+## How to apply
 
 ### Construct your form
 
@@ -73,6 +69,8 @@ class RegistrationForm : EasyForm() {
 This is just adding an empty field. Now add the Validator you want to use.
 
 **The Validator in the EasyLab class is some of the validators we have presented. How to create your own Validator is described below.**
+
+The validate function is to add each validator sequentially to the field. In other words, each validator is validated in sequence. If the previous validator fails, the next validation is not performed.
 
 ```kotlin
 class RegistrationForm : EasyForm() {
@@ -96,6 +94,8 @@ In your xml side, set class you just created as variable. (Only available for pr
 
 And attach your field like this. Note the "android:text" part.
 
+**Remember to set the argument in 2-way binding format.**
+
 ```xml
 <EditText    
 	android:id="@+id/nameEditText"
@@ -106,8 +106,6 @@ And attach your field like this. Note the "android:text" part.
 ```
 
 Set the part that needs verification result as below. (E.g. OK button),  Note the "android:enabled" part.
-
-**Remember to set the argument in 2-way binding format.**
 
 ```xml
 <Button
@@ -129,9 +127,100 @@ binding.form = form
 
 
 
-### Using with MVVM (Additional process)
+**When you need to validate multiple forms, you can construct a form class like this.**
 
-Our form is easy to organize your MVVM design project.
+```kotlin
+class RegistrationForm : EasyForm() {
+    val name = registField(EasyField<String>().apply {
+        validate(EasyLab.TextEmptyValidator(), "Input your name, please.")
+    })
+
+    val email = registField(EasyField<String>()).apply {
+        validate(EasyLab.TextEmptyValidator(), "Input your email, please.")
+        validate(EasyLab.EmailValidator(), "Please write a valid email.")
+    }
+
+    val introduction = registField(EasyField<String>().apply {
+        validate(EasyLab.TextEmptyValidator(), "Input your introduction, please.")
+    })
+
+    val password = registField(EasyField<String>().apply {
+        validate(EasyLab.TextEmptyValidator(), "Input your password, please.")
+        validate(EasyLab.TextLengthValidator(4, 12), "Password must be 4 or more and 12 or less.")
+    })
+
+    val passwordRepeat = registField(EasyField<String>().apply {
+        validate(EasyLab.TextEmptyValidator(), "It is not the same as the password you entered.")
+        validate(
+            EasyLab.TextSameValidator(this@RegistrationForm, password, this),
+            "It is not the same as the password you entered."
+        )
+    })
+}
+```
+
+
+
+## How to create your own Validator
+
+Inherit the EasyValidator class and write your validate logic.
+
+```kotlin
+class OwnValidator : EasyValidator<String> {
+    override fun isValid(value: String): Boolean {
+        // write your validate logic here.
+    }
+}
+```
+
+If it's simple enough not to create any classes, you can do the following:
+
+```kotlin
+val name = registField(EasyField<String>().apply {
+    validate({ 
+        if (it.isNullOrEmpty()) false else true
+    }, "Input your name, please.")
+})
+```
+
+
+
+## Pre-Created Validators
+
+Some frequently used validators are provided in the EasyLab class.
+
+```kotlin
+EasyLab.TextEmptyValidator()
+EasyLab.EmailValidator()
+EasyLab.TextLengthValidator(minlength, maxlength)
+EasyLab.TextSameValidator(this@YourForm, first-form, twin-form /*Usually this field should be the field where the validator is applied.*/)
+```
+
+
+
+## To manage required input
+
+By default, all EasyFields have a required input value of true. However, it may be necessary to change the required input. (e.g., getting additional information for a particular job) This library provides an alternative for this case.
+
+**If you set this up, it will be a mandatory field for only those with the name abc.**
+
+```kotlin
+val name = registField(EasyField<String>().apply {
+    validate(EasyLab.TextEmptyValidator(), "Input your name, please.")
+})
+
+val test = registField(EasyField<String>()).apply {
+    essential = {
+        if (name.get() == "abc") true else false
+    }
+}
+```
+
+
+
+## Using with MVVM
+
+The EasyForm can be used with LiveData. **This means that it is compatible with LiveData's specialized features, such as maintaining input values when rotating the screen.**
 
 In your ViewModel class, Set up MutableLiveData to manage your classes.
 
@@ -162,7 +251,7 @@ if (viewModel.formLiveData.value == null)
 
 ## How to show error message dynamically
 
-### Construct with TextView
+### Construct with Plain TextView
 
 If you want show your message to any textview dynamically, just set like this.
 
@@ -236,61 +325,3 @@ Just set TextInputLayout like this. Note the "app:errorText" part.
 		android:text="@={form.name}" />
 </com.google.android.material.textfield.TextInputLayout>
 ```
-
-
-
-## How to create your own Validator
-
-Inherit the EasyValidator class and write your validate logic.
-
-```kotlin
-class OwnValidator : EasyValidator<String> {
-    override fun isValid(value: String): Boolean {
-        // write your validate logic here.
-    }
-}
-```
-
-If it's simple enough not to create any classes, you can do the following:
-
-```kotlin
-val name = registField(EasyField<String>().apply {
-    validate({ 
-        if (it.isNullOrEmpty()) false else true
-    }, "Input your name, please.")
-})
-```
-
-
-
-## To manage required input
-
-By default, all EasyFields have a required input value of true. However, it may be necessary to change the required input. (e.g., getting additional information for a particular job) This library provides an alternative for this case.
-
-**If you set this up, it will be a mandatory field for only those with the name abc.**
-
-```kotlin
-val name = registField(EasyField<String>().apply {
-    validate(EasyLab.TextEmptyValidator(), "Input your name, please.")
-})
-
-val test = registField(EasyField<String>()).apply {
-    essential = {
-        if (name.get() == "abc") true else false
-    }
-}
-```
-
-
-
-## Pre-Created Validators
-
-Some frequently used validators are provided in the EasyLab class.
-
-```kotlin
-EasyLab.TextEmptyValidator()
-EasyLab.EmailValidator()
-EasyLab.TextLengthValidator(minlength, maxlength)
-EasyLab.TextSameValidator(this@YourForm, first-form, twin-form /*Usually this field should be the field where the validator is applied.*/)
-```
-
