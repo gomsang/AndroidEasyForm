@@ -1,5 +1,10 @@
 # AndroidEasyForm
 
+In many cases, form verification is required, such as membership screen, login screen, and post upload screen. Forms can require multiple to dozens of different forms, which further complicates the verification logic.
+
+This project offers a way to make managing such form verification any bit easier.
+
+<video width="25%" height="25%" src="readmeassets/1.mp4"></video>
 ## Caution!
 
 It's just close to a personal suggestion. So, each version update can have major changes. 
@@ -70,7 +75,7 @@ This is just adding an empty field. Now add the Validator you want to use.
 
 ```kotlin
 class RegistrationForm : EasyForm() {
-	val name = registField(EasyField<String>().apply{
+    val name = registField(EasyField<String>().apply{
         validate(EasyLab.TextEmptyValidator(), "Input your name, please.")
     })
 }
@@ -163,8 +168,8 @@ If you want show your message to any textview dynamically, just set like this.
 ```xml
 <TextView
 	android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="@{form.errorMessage}" />
+	android:layout_height="wrap_content"
+	android:text="@{form.errorMessage}" />
 ```
 
 **If you want to display error messages for each field, set it as follows:**
@@ -177,6 +182,8 @@ If you want show your message to any textview dynamically, just set like this.
            validate(EasyLab.TextEmptyValidator(), "Input your name, please.")
        })
        val nameError = name.errorMessage
+       ...
+   }
    ```
 
 2. Set error message variable as textview text.
@@ -184,12 +191,13 @@ If you want show your message to any textview dynamically, just set like this.
    ```xml
    <TextView
    	android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:text="@{form.nameError}" />
+   	android:layout_height="wrap_content"
+   	android:text="@{form.nameError}" />
    ```
 
 ### Construct with Google Material TextInputLayout
 
+<video width="25%" height="25%" src="readmeassets/2.mp4"></video>
 Set error message variable like this. (All EasyField has error message variable like this.)
 
 ```kotlin
@@ -220,10 +228,10 @@ Just set TextInputLayout like this. Note the "app:errorText" part.
 	android:layout_height="wrap_content"
 	android:hint="Name"
 	app:errorText="@{form.nameError}">
-		<com.google.android.material.textfield.TextInputEditText
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="@={form.name}" />
+	<com.google.android.material.textfield.TextInputEditText
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@={form.name}" />
 </com.google.android.material.textfield.TextInputLayout>
 ```
 
