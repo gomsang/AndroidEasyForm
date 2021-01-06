@@ -46,12 +46,12 @@ class EasyField<T> : ObservableField<T>() {
         linkedForm = form
     }
 
-    fun validate(validator: EasyValidator<T>, msg: Int) {
+    fun validate(validator: EasyValidator<T>, msg: Int = R.string.empty_string) {
         validators.add(validator)
         validatorMessageMap[validator] = msg
     }
 
-    fun validate(function: (T) -> Boolean, msg: Int) {
+    fun validate(function: (T) -> Boolean, msg: Int = R.string.empty_string) {
         val validator = object : EasyValidator<T> {
             override fun isValid(value: T): Boolean {
                 return function(value)
