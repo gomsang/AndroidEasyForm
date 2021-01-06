@@ -41,7 +41,7 @@ allprojects {
 
 ```gradle
 dependencies {
-	implementation 'com.github.gomsang:AndroidEasyForm:0.0.1'
+	implementation 'com.github.gomsang:AndroidEasyForm:0.0.3'
 }
 ```
 
@@ -202,7 +202,7 @@ Some frequently used validators are provided in the EasyLab class.
 EasyLab.TextEmptyValidator()
 EasyLab.EmailValidator()
 EasyLab.TextLengthValidator(minlength, maxlength)
-EasyLab.TextSameValidator(this@YourForm, first-form, twin-form /*Usually this field should be the field where the validator is applied.*/)
+EasyLab.TextSameValidator(first-form, twin-form /*Usually this field should be the field where the validator is applied.*/)
 ```
 
 
