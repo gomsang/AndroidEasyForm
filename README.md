@@ -75,7 +75,7 @@ The validate function is to add each validator sequentially to the field. In oth
 ```kotlin
 class RegistrationForm : EasyForm() {
     val name = registField(EasyField<String>().apply{
-        validate(EasyLab.TextEmptyValidator(), "Input your name, please.")
+        validate(EasyLab.TextEmptyValidator(), R.string.message_warn_registration_name_empty)
     })
 }
 ```
@@ -132,28 +132,37 @@ binding.form = form
 ```kotlin
 class RegistrationForm : EasyForm() {
     val name = registField(EasyField<String>().apply {
-        validate(EasyLab.TextEmptyValidator(), "Input your name, please.")
+        validate(EasyLab.TextEmptyValidator(), R.string.message_warn_registration_name_empty)
     })
 
     val email = registField(EasyField<String>()).apply {
-        validate(EasyLab.TextEmptyValidator(), "Input your email, please.")
-        validate(EasyLab.EmailValidator(), "Please write a valid email.")
+        validate(EasyLab.TextEmptyValidator(), R.string.message_warn_registration_email_empty)
+        validate(EasyLab.EmailValidator(), R.string.message_warn_registration_email_email)
     }
 
     val introduction = registField(EasyField<String>().apply {
-        validate(EasyLab.TextEmptyValidator(), "Input your introduction, please.")
+        validate(
+            EasyLab.TextEmptyValidator(),
+            R.string.message_warn_registration_introduction_empty
+        )
     })
 
     val password = registField(EasyField<String>().apply {
-        validate(EasyLab.TextEmptyValidator(), "Input your password, please.")
-        validate(EasyLab.TextLengthValidator(4, 12), "Password must be 4 or more and 12 or less.")
+        validate(EasyLab.TextEmptyValidator(), R.string.message_warn_registration_password_empty)
+        validate(
+            EasyLab.TextLengthValidator(4, 12),
+            R.string.message_warn_registration_password_length
+        )
     })
 
     val passwordRepeat = registField(EasyField<String>().apply {
-        validate(EasyLab.TextEmptyValidator(), "It is not the same as the password you entered.")
         validate(
-            EasyLab.TextSameValidator(this@RegistrationForm, password, this),
-            "It is not the same as the password you entered."
+            EasyLab.TextEmptyValidator(),
+            R.string.message_warn_registration_password_check_empty
+        )
+        validate(
+            EasyLab.TextSameValidator(password, this),
+            R.string.message_warn_registration_password_check_not_same
         )
     })
 }
@@ -206,7 +215,7 @@ By default, all EasyFields have a required input value of true. However, it may 
 
 ```kotlin
 val name = registField(EasyField<String>().apply {
-    validate(EasyLab.TextEmptyValidator(), "Input your name, please.")
+    validate(EasyLab.TextEmptyValidator(), R.string.message_warn_registration_name_empty)
 })
 
 val test = registField(EasyField<String>()).apply {
@@ -218,7 +227,7 @@ val test = registField(EasyField<String>()).apply {
 
 
 
-## Using with MVVM
+## Using with LiveData
 
 The EasyForm can be used with LiveData. **This means that it is compatible with LiveData's specialized features, such as maintaining input values when rotating the screen.**
 
@@ -294,7 +303,7 @@ Set error message variable like this. (All EasyField has error message variable 
 ```kotlin
 class RegistrationForm : EasyForm() {
     val name = registField(EasyField<String>().apply {
-        validate(EasyLab.TextEmptyValidator(), "Input your name, please.")
+        validate(EasyLab.TextEmptyValidator(), R.string.message_warn_registration_name_empty)
     })
     val nameError = name.errorMessage
 ```
@@ -305,8 +314,12 @@ Construct BindingAdapter like this.
 object ErrorBindingAdapter {
     @JvmStatic
     @BindingAdapter("app:errorText")
-    fun setErrorMessage(view: TextInputLayout, errorMessage: String) {
-        view.error = errorMessage
+    fun setErrorMessage(view: TextInputLayout, errorMessage: Int?) {
+        if (errorMessage == null){
+            view.error = null
+        }else{
+            view.error = view.context.getString(errorMessage)
+        }
     }
 }
 ```
