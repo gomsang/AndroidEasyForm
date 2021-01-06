@@ -1,9 +1,7 @@
 package com.gomsang.androideasyform.library.validators
 
-import android.text.TextUtils
 import android.util.Patterns
 import com.gomsang.androideasyform.library.EasyField
-import com.gomsang.androideasyform.library.EasyForm
 import com.gomsang.androideasyform.library.EasyValidator
 
 /**
@@ -31,16 +29,15 @@ class EasyLab {
     }
 
     class TextSameValidator(
-        private val form: EasyForm,
         private val a: EasyField<String>,
         private val b: EasyField<String>
     ) : EasyValidator<String> {
         init {
             a.addOnFieldChangeListener { _, _ ->
-                form.update(b as EasyField<Any>)
+                b.updateValidState()
             }
             b.addOnFieldChangeListener { _, _ ->
-                form.update(b as EasyField<Any>)
+                a.updateValidState()
             }
         }
 

@@ -26,6 +26,5 @@ class BasicRegistrationWithMVVMActivity : AppCompatActivity() {
                 binding.form = it
             }
         })
-        if (viewModel.formLiveData.value == null) viewModel.formLiveData.value = RegistrationForm()
     }
 }

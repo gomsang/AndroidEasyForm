@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">AndroidEasyForm</string>
+    <string name="message_warn_registration_name_empty">Input your name, please.</string>
+    <string name="message_warn_registration_email_empty">Input your email, please.</string>
+    <string name="message_warn_registration_email_email">Please write a valid email.</string>
+    <string name="message_warn_registration_introduction_empty">Input your introduction, please.</string>
+    <string name="message_warn_registration_password_empty">Input your password, please.</string>
+    <string name="message_warn_registration_password_length">Password must be 4 or more and 12 or less.</string>
+    <string name="message_warn_registration_password_check_empty">It is not the same as the password you entered.</string>
+    <string name="message_warn_registration_password_check_not_same">It is not the same as the password you entered.</string>
 </resources>

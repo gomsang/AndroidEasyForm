@@ -6,5 +6,5 @@ import androidx.lifecycle.ViewModel
 import com.gomsang.androideasyform.basicregistration.RegistrationForm
 
 class BasicRegistrationViewModel : ViewModel() {
-    val formLiveData = MutableLiveData<RegistrationForm>()
+    val formLiveData = MutableLiveData<RegistrationForm>(RegistrationForm())
 }
