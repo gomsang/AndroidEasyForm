@@ -61,7 +61,7 @@
             android:textColor="@android:color/holo_red_dark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{form.errorMessage}" />
+            android:text='@{form.errorMessage}' />
 
         <Button
             android:layout_width="match_parent"

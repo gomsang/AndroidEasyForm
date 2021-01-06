@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AndroidEasyForm</string>
+    <string name="empty_string" />
 </resources>
