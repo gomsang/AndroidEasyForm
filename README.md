@@ -219,7 +219,7 @@ val name = registField(EasyField<String>().apply {
 })
 
 val test = registField(EasyField<String>()).apply {
-    essential = {
+    required = {
         if (name.get() == "abc") true else false
     }
 }

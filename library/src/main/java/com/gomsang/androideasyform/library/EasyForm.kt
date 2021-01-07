@@ -59,7 +59,7 @@ open class EasyForm {
      */
     private fun stateUpdate() {
         for (entry in fieldValidStateMap.entries) {
-            if (!entry.value && entry.key.essential()) {
+            if (!entry.value && entry.key.required()) {
                 isValidate.set(false)
                 return
             }

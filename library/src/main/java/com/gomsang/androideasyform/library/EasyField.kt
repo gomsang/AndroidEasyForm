@@ -17,7 +17,7 @@ class EasyField<T> : ObservableField<T>() {
     val errorMessage = ObservableField<Int>(R.string.empty_string)
     private var errorValidator: EasyValidator<*>? = null
 
-    var essential: () -> Boolean = { true }
+    var required: () -> Boolean = { true }
 
     override fun set(value: T?) {
         super.set(value)
